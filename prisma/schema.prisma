@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id          String    @unique
+  sessionId   String    @id @default(auto()) @map("_id") @db.ObjectId
+  shop        String
+  state       String
+  isOnline    Boolean   @default(false)
+  scope       String?
+  expires     DateTime?
+  accessToken String
+  userId      BigInt?  
+}
+
+model UserAccount {
+  id               String     @unique
+  userId           String     @id @default(auto()) @map("_id") @db.ObjectId
+  email            String     @unique
+  username         String?
+  uninstallDate    DateTime?  // Ngày người dùng uninstall app (nếu có)
+  subscriptionId   String?
+  packageName      String     // Tên gói thanh toán (free, active-report, active-import, active-tracking, active-full)
+  paymentHistories PaymentHistory[]
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  shop             String     @unique
+  shopifyExports   ShopifyExportType[] 
+}
+
+type ShopifyExportType{
+  id     String
+  name   String
+}
+
+model ShopifyExport {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  userAccount    String   
+  name           String
+  description    String?
+  dataType       String             
+  exportColumns  ExportColumn[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model ExportColumn {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  columnName      String
+  columnTitle     String
+  position        Int      // Vị trí của cột
+  shopifyExport   ShopifyExport   @relation(fields: [id], references: [id])
+}
+
+model FilterColumn {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  type            Int
+  value           String
+  filterName      String
+}
+
+
+model PaymentHistory {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  userAccount    UserAccount    @relation(fields: [id], references: [userId])
+  amount         Float    // Số tiền thanh toán
+  paymentDate    DateTime // Ngày thanh toán
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
