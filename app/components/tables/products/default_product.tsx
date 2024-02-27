@@ -12,7 +12,7 @@ import { useState, useCallback, FC, useEffect, useMemo } from "react";
 import AddFilterFieldCustom from "~/components/export_app/addFilterFieldCustom";
 import HeadingCustomTable from "~/components/export_app/headingCustomeTable";
 import EditColumnField from "~/components/export_app/editColumnField";
-import Loading from "~/components/general/loading";
+import Loading from "~/components/commons/loading";
 import {
   defaultHeadingProduct,
   defaultPopoverProduct,
@@ -32,17 +32,14 @@ import SortButton from "~/components/export_app/sortButton";
 interface TableProps {
   data?: any[];
   loading?: boolean;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SortableDataTableDefaultProduct: FC<TableProps> = ({
   data = [],
   loading = false,
-  value,
-  setValue,
 }) => {
   const [valueInput, setValueInput] = useState<any>(defaultHeadingProduct);
+  const [value, setValue] = useState("");
   const [popoverActive, setPopoverActive] = useState(defaultPopoverProduct);
   const [popoverFilterActive, setPopoverFilterActive] = useState(false);
   const [renderTime, setRenderTime] = useState(0);
