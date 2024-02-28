@@ -12,7 +12,7 @@ import { useState, useCallback, FC, useEffect, useMemo } from "react";
 import AddFilterFieldCustom from "~/components/export_app/addFilterFieldCustom";
 import HeadingCustomTable from "~/components/export_app/headingCustomeTable";
 import EditColumnField from "~/components/export_app/editColumnField";
-import Loading from "~/components/commons/loading";
+import Loading from "~/components/general/loading";
 import {
   defaultHeadingProduct,
   defaultPopoverProduct,
