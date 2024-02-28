@@ -5,7 +5,6 @@ import polarisStyles from "@shopify/polaris/build/esm/styles.css";
 import { boundary } from "@shopify/shopify-app-remix/server";
 import { AppProvider } from "@shopify/shopify-app-remix/react";
 import { authenticate } from "../shopify.server";
-import { DataProvider } from "~/context/dataContext";
 import { useState } from "react";
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
@@ -23,14 +22,12 @@ export default function App() {
 
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
-      <DataProvider>
         <ui-nav-menu>
           <Link to="/app/">Home</Link>
           <Link to="/app/report">Data Report</Link>
-          <Link to="/app/tracking">Tracking Orders</Link>
+          {/* <Link to="/app/tracking">Tracking Orders</Link> */}
         </ui-nav-menu>
         <Outlet context={{ filters, setFilters }} />
-      </DataProvider>
     </AppProvider>
   );
 }

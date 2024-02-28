@@ -12,7 +12,7 @@ import {
   SkeletonDisplayText,
 } from "@shopify/polaris";
 import { useEffect } from "react";
-import HeaderBar from "~/components/general/header";
+import HeaderBar from "~/components/commons/header";
 import DataReport from "~/layouts/export_app/report";
 import { authenticate } from "../../app/shopify.server";
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node";

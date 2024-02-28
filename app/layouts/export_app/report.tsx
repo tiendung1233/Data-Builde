@@ -222,8 +222,7 @@ export default function DataReport() {
       <Card>
         <div style={{ width: "70%", minWidth: "300px" }}></div>
         <SortableDataTableDefaultProduct
-          // value={value}
-          // setValue={setValue}
+          defaultValue={value}
           loading={loading}
           data={actionData?.products}
         />

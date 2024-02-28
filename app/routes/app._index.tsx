@@ -15,7 +15,7 @@ import {
   InlineStack,
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
-import HeaderBar from "~/components/general/header";
+import HeaderBar from "~/components/commons/header";
 import { useRoutes } from "react-router-dom";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
