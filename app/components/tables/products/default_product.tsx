@@ -12,7 +12,7 @@ import { useState, useCallback, FC, useEffect, useMemo } from "react";
 import AddFilterFieldCustom from "~/components/export_app/addFilterFieldCustom";
 import HeadingCustomTable from "~/components/export_app/headingCustomeTable";
 import EditColumnField from "~/components/export_app/editColumnField";
-import Loading from "~/components/general/loading";
+import Loading from "~/components/commons/loading";
 import {
   defaultHeadingProduct,
   defaultPopoverProduct,
@@ -28,18 +28,21 @@ import {
 } from "~/ultils/func/func";
 import DateRangePicker from "~/components/export_app/dateTimePicker";
 import SortButton from "~/components/export_app/sortButton";
+import ExportButton from "~/components/export_app/exportButton";
 
 interface TableProps {
   data?: any[];
   loading?: boolean;
+  defaultValue ?: string
 }
 
 const SortableDataTableDefaultProduct: FC<TableProps> = ({
   data = [],
   loading = false,
+  defaultValue
 }) => {
   const [valueInput, setValueInput] = useState<any>(defaultHeadingProduct);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("Default");
   const [popoverActive, setPopoverActive] = useState(defaultPopoverProduct);
   const [popoverFilterActive, setPopoverFilterActive] = useState(false);
   const [renderTime, setRenderTime] = useState(0);
@@ -196,7 +199,7 @@ const SortableDataTableDefaultProduct: FC<TableProps> = ({
 
   const handleExport = (type: string) => {
     const columnHeaders = headingField.map((item) => item.value);
-    if (type === "csv") {
+    if (type.toLowerCase() === "csv") {
       exportToCSV(rows, value, columnHeaders);
     } else {
       exportToExcel(rows, `${value}.xlsx`, value, columnHeaders);
@@ -252,7 +255,7 @@ const SortableDataTableDefaultProduct: FC<TableProps> = ({
 
   return (
     <div style={{ marginTop: "50px" }}>
-      {value && (
+      {defaultValue && (
         <>
           <div
             style={{
@@ -274,7 +277,7 @@ const SortableDataTableDefaultProduct: FC<TableProps> = ({
               <Button variant="secondary" size="slim">
                 Schedule
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => {
                   handleExport("csv");
                 }}
@@ -283,7 +286,8 @@ const SortableDataTableDefaultProduct: FC<TableProps> = ({
                 icon={ExportMinor}
               >
                 Export
-              </Button>
+              </Button> */}
+              <ExportButton handleExport = {handleExport}/>
               <Button
                 onClick={() => {
                   setFilters([]);
